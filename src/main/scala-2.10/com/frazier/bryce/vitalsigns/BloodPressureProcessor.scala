@@ -17,11 +17,11 @@ class BloodPressureProcessor {
             val s = systolic.toInt
             val d = diastolic.toInt
             if (s <= 0 || d <= 0) throw new Exception()
-            else if (s < 120 && d < 80) (record.id, BP_NORMAL_RESULT)
-            else if (s >= 120 && s <= 139 || d >= 80 && d <= 89) (record.id, BP_PREHYPERTENSION_RESULT)
-            else if (s >= 140 && s <= 159 || d >= 90 && d <= 99) (record.id, BP_STAGE_1_RESULT)
-            else if (s >= 160 && s < 180 || d >= 100 && d < 110) (record.id, BP_STAGE_2_RESULT)
-            else (record.id, BP_HYPERSTENSIVE_CRISIS_RESULT)
+            else if ( s >= 180 ||  d >= 110) (record.id, BP_HYPERSTENSIVE_CRISIS_RESULT)
+            else if (s >= 160  || d >= 100) (record.id, BP_STAGE_2_RESULT)
+            else if (s >= 140 || d >= 90) (record.id, BP_STAGE_1_RESULT)
+            else if  (s >= 120 || d >= 80) (record.id, BP_PREHYPERTENSION_RESULT)
+            else (record.id, BP_NORMAL_RESULT) // (s < 120 && d < 80)
           } catch {
             case e: Exception => throw new Exception("incorrect blood pressure format with record: " + record.toString)
           }

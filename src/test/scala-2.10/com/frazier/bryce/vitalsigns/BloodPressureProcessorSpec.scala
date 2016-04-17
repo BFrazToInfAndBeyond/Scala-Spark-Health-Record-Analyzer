@@ -105,7 +105,7 @@ class BloodPressureProcessorSpec extends FunSpec with BeforeAndAfter with Should
       }
     }
 
-    //    2) Systolic: 120 – 139      OR   Diastolic:  80 – 89
+    //    2) ( S < 140 AND D < 90 )   AND   (S >= 120 OR D >= 80)
     describe("given Prehypertension") {
       it("should declare expected interpretation") {
         val healthRecord1 = HealthRecord(1, 1, 20, "M", "Southeast", 1324, 20, defaultCholesterol, 60, "120/79")
@@ -118,9 +118,9 @@ class BloodPressureProcessorSpec extends FunSpec with BeforeAndAfter with Should
 
         val expectedResults =
           List((1, BP_PREHYPERTENSION_RESULT),
-            (2, BP_PREHYPERTENSION_RESULT),
+            (2, BP_STAGE_1_RESULT),
             (3, BP_PREHYPERTENSION_RESULT),
-            (4, BP_PREHYPERTENSION_RESULT),
+            (4, BP_STAGE_1_RESULT),
             (5, BP_STAGE_1_RESULT))
 
         val actualResults = testObj.obtainBloodPressureResults(records)
@@ -129,7 +129,7 @@ class BloodPressureProcessorSpec extends FunSpec with BeforeAndAfter with Should
       }
     }
 
-    //    3)  Systolic: 140 – 159       OR     Diastolic: 90 – 99
+    //    3)  (140 <= S < 160    AND  D < 100)     OR     (S < 160  AND  90 <= D < 100)
     describe("given High Blood Pressure - stage 1") {
       it("should declare expected interpretation") {
 
@@ -143,12 +143,12 @@ class BloodPressureProcessorSpec extends FunSpec with BeforeAndAfter with Should
         val records = sc.parallelize(List(healthRecord1, healthRecord2, healthRecord3, healthRecord4, healthRecord5, healthRecord6))
 
         val expectedResults =
-          List((1, BP_PREHYPERTENSION_RESULT),
-            (2, BP_PREHYPERTENSION_RESULT),
+          List((1, BP_STAGE_1_RESULT),
+            (2, BP_STAGE_1_RESULT),
             (3, BP_STAGE_1_RESULT),
-            (4, BP_STAGE_1_RESULT),
+            (4, BP_STAGE_2_RESULT),
             (5, BP_STAGE_1_RESULT),
-            (6, BP_STAGE_1_RESULT))
+            (6, BP_STAGE_2_RESULT))
 
         val actualResults = testObj.obtainBloodPressureResults(records)
 
@@ -157,23 +157,23 @@ class BloodPressureProcessorSpec extends FunSpec with BeforeAndAfter with Should
       }
     }
 
-    //    4)  Systolic: 160 - 179       OR    Diastolic: 100 - 109
+    //    4)  (160 <= S < 180  AND D < 110)   OR    (S < 180  AND  100 <= D < 110)
     describe("given High Blood Pressure - stage 2") {
       it("should declare expected interpretation") {
-        val healthRecord1 = HealthRecord(1, 1, 20, "M", "Southeast", 1324, 20, defaultCholesterol, 60, "160/100")
-        val healthRecord2 = HealthRecord(2, 2, 25, "F", "Northwest", 1325, 10, defaultCholesterol, 70, "180/109")
+        val healthRecord1 = HealthRecord(1, 1, 20, "M", "Southeast", 1324, 20, defaultCholesterol, 60, "160/99")
+        val healthRecord2 = HealthRecord(2, 2, 25, "F", "Northwest", 1325, 10, defaultCholesterol, 70, "158/109")
         val healthRecord3 = HealthRecord(3, 3, 27, "M", "Northwest", 1326, 14, defaultCholesterol, 77, "170/110")
         val healthRecord4 = HealthRecord(4, 4, 28, "M", "Northwest", 1326, 14, defaultCholesterol, 77, "180/100")
-        val healthRecord5 = HealthRecord(5, 5, 29, "M", "Southeast", 1329, 20, defaultCholesterol, 60, "180/110")
+        val healthRecord5 = HealthRecord(5, 5, 29, "M", "Southeast", 1329, 20, defaultCholesterol, 60, "170/108")
 
         val records = sc.parallelize(List(healthRecord1, healthRecord2, healthRecord3, healthRecord4, healthRecord5))
 
         val expectedResults =
           List((1, BP_STAGE_2_RESULT),
             (2, BP_STAGE_2_RESULT),
-            (3, BP_STAGE_2_RESULT),
-            (4, BP_STAGE_2_RESULT),
-            (5, BP_HYPERSTENSIVE_CRISIS_RESULT))
+            (3, BP_HYPERSTENSIVE_CRISIS_RESULT),
+            (4, BP_HYPERSTENSIVE_CRISIS_RESULT),
+            (5, BP_STAGE_2_RESULT))
 
         val actualResults = testObj.obtainBloodPressureResults(records)
 
@@ -192,7 +192,7 @@ class BloodPressureProcessorSpec extends FunSpec with BeforeAndAfter with Should
         val records = sc.parallelize(List(healthRecord1, healthRecord2, healthRecord3))
 
         val expectedResults =
-          List((1, BP_STAGE_2_RESULT),
+          List((1, BP_HYPERSTENSIVE_CRISIS_RESULT),
             (2, BP_HYPERSTENSIVE_CRISIS_RESULT),
             (3, BP_HYPERSTENSIVE_CRISIS_RESULT))
 
