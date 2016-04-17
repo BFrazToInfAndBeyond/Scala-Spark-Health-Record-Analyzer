@@ -13,6 +13,9 @@ object Runner {
     val healthRecordInputFile = args(0)
     val patientRecordOutputFile = args(1)
 
+    val outputPath = new Path(patientRecordOutputFile)
+    val fs = FileSystem.get(new Configuration)
+    if(fs.exists(outputPath)) fs.delete(outputPath, true)
 
     val aggregatedResults = VitalSigns().derivePatientResultsAndSaveToFile(
                                                             healthRecordInputFile,
