@@ -1,0 +1,3 @@
+{"id":1,"patientId":1,"age":20,"gender":"M", "region":"Southeast", "timestamp":1324, "glucoseLvl":44 , "cholesterol":{"total":180,"ldl"80,"hdl":69,"triglycerides":140}, "heartRate":60, "bloodPressure":"80/69"}
+{"id":2,"patientId":2,"age":25,"gender":"F", "region":"Northwest", "timestamp":1325, "glucoseLvl":-1 , "cholesterol":{"total":230,"ldl":135,"hdl":45,"triglycerides":152}, "heartRate":70, "bloodPressure":"121/79"}
+{"id":3,"patientId":3,"age":24,"gender":"F", "region":"Northwest", "timestamp":1349, "glucoseLvl":127 , "cholesterol":{"total":201,"ldl":170,"hdl":52,"triglycerides":501}, "heartRate":70, "bloodPressure":"160/90dfsa"}
