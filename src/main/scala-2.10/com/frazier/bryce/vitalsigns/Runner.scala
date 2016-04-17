@@ -35,16 +35,9 @@ object Spark {
 // in units: mm Hg, where the numerator is Systolic, and the denominator is Diastolic
 // and read as "118 over 74 millimeters of mercury"
 
-
 // cholesterol figures are in mg/dL (U.S. & other countries). Canada & most of Europe use mmol/L
 
-//  glucoseLvl
-//  # < 45 => Abnormally low
-//  from  45 to 99 mg/DL (~3 to 5.5 mmol/L)  	Normal fasting glucose  //http://www.healthieryou.com/hypo.html
-//    from 100 to 125 mg/DL(5.6 to 6.9 mmol/L)   	Prediabetes (impaired fasting glucose)
-//  from 126 mg/DL(7.0 mmol/L) 				  Diabetes   (if only one => declare need to take another to be more decisive)
-//  and above on more than one testing occasion			(logic counting if any labeled Diabetes)
-//
+//  glucoseLvl in mg/DL
 
 case class Cholesterol(total: Int, ldl: Int, hdl: Int, triglycerides: Int)
 
