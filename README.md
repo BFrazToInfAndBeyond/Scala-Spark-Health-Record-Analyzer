@@ -2,6 +2,8 @@
 Determines if individual patients have Diabetes, High Blood Pressure, and/or High Cholesterol
 and aggregates the percent occurrence for each condition within the population.
 
+NOTE: This App was written TDD style AND has end-to-end tests
+
 ## Flow of App
 
 ### Input
